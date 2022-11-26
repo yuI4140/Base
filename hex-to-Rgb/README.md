@@ -14,3 +14,5 @@ then go to this repo and run it(remember in "./" of the repo)
 cargo run --release
 ```
 Done!
+## currently
+working on it=true
