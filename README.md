@@ -1,2 +1,3 @@
 # Base
- This repository is for save some repositories that are small  and don't need a entire repo
+This repository is for storing some repos
+that are small and don't need a full repo.
