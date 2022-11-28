@@ -1,4 +1,4 @@
-from cpp_fn import initialize
-initialize()
+from UI import*
+start()
 
 
