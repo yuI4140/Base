@@ -2,7 +2,9 @@
 // Made by YuI4140
 use crate::prelude::*;
 use std::fs::read_dir;
-
+struct Explorer{
+	
+}
 mod error;
 mod prelude;
 mod utils;
