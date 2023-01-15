@@ -1,4 +1,0 @@
-from UI import*
-start()
-
-
