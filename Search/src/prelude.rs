@@ -1,5 +1,6 @@
-use std::io::prelude::*;
+use std::{io::prelude::*, sync::Arc};
 use std::fs::File;
+use regex::Regex;
 use num::{BigInt, Num};
 pub use crate::error::Error;
 pub type Result<T> = core::result::Result<T, Error>;
@@ -24,8 +25,10 @@ impl  Tools {
     }
 
     pub fn new()->Tools {
-     //   let W<String>=
-    }
+    let m_str:String="".to_owned();
+    let m_ntool:Tools=Tools{obj: W(m_str)};
+    return m_ntool;
+}
 
     pub fn load_file(path:&str)->usize{
         let mut file=File::open(path).unwrap();
@@ -63,5 +66,51 @@ pub fn convert_hex_to_dec(hex_str: &str) -> String {
     _g_int.parse::<f32>().unwrap(),
     _b_int.parse::<f32>().unwrap()];
     return rgb;
+    }
+}
+pub struct TextFormat{
+    m_txt:String,
+    expr_regex:String,
+}
+impl TextFormat {
+    pub fn find(&self) -> Option<&str> {
+        let re = Regex::new(&self.expr_regex).unwrap();
+        match re.find(&self.m_txt) {
+            Some(mat) => Some(&self.m_txt[mat.start()..mat.end()]),
+            None => None,
+        }
+    }
+    pub fn new()->TextFormat{
+    let creation=TextFormat{
+        m_txt: "".to_owned(),
+        expr_regex: "".to_owned(),
+    };
+    pub fn SetTxt(mut _self: TextFormat, value:&str){
+       _self.m_txt = value.to_owned();
+    }
+    pub fn SetExpr(mut _self: TextFormat, value:&str){
+        _self.expr_regex = value.to_owned();
+     }
+    return creation;
+    }
+    pub fn findTxt(&mut self, file_path: &str) {
+        let mut file = match File::open(file_path) {
+            Ok(file) => file,
+            Err(_) => {
+                println!("Error: Unable to open the file at the given path.");
+                return;
+            }
+        };
+        let mut contents = String::new();
+        match file.read_to_string(&mut contents) {
+            Ok(_) => {
+                let re = Regex::new(&self.expr_regex).unwrap();
+                match re.find(&contents) {
+                    Some(mat) => self.m_txt = contents[mat.start()..mat.end()].to_string(),
+                    None => self.m_txt = "".to_string(),
+                }
+            }
+            Err(_) => println!("Error: Unable to read from the file at the given path."),
+        }
     }
 }
